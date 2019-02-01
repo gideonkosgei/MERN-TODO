@@ -1,25 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import ReactNotification from "react-notifications-component";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-class App extends Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.addNotification = this.addNotification.bind(this);
+    this.notificationDOMRef = React.createRef();
+  }
+
+  addNotification() {
+    this.notificationDOMRef.current.addNotification({
+      title: "Awesomeness",
+      message: "Awesome Notifications!",
+      type: "success",
+      insert: "top",
+      container: "top-right",
+      animationIn: ["animated", "fadeIn"],
+      animationOut: ["animated", "fadeOut"],
+      dismiss: { duration: 2000 },
+      dismissable: { click: true }
+    });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="app-content">
+        <ReactNotification ref={this.notificationDOMRef} />
+        <button onClick={this.addNotification} className="btn btn-primary">
+          Add Awesome Notification
+        </button>
       </div>
     );
   }
